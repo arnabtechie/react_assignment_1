@@ -16,9 +16,11 @@ const Login = () => {
     }
   };
 
-  gapi.load("client:auth2", () => {
-    gapi.auth2.init({clientId: config.GOOGLE_API_TOKEN})
-  });
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({clientId: config.GOOGLE_API_TOKEN})
+    });
+  }, [])
   
   return (
     <div className="flex justify-start items-center flex-col h-screen">
