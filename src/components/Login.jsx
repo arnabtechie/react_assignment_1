@@ -9,18 +9,20 @@ import { gapi } from "gapi-script";
 
 const Login = () => {
   const responseGoogle = (response) => {
-    if (!response || !response.error) {
-      localStorage.setItem('user', JSON.stringify(response.profileObj));
-      const { name, googleId, imageUrl } = response.profileObj;
-      console.log(name, googleId, imageUrl);
-    }
+    localStorage.setItem('user', JSON.stringify(response.profileObj));
+    const { name, googleId, imageUrl } = response.profileObj;
+    console.log(name, googleId, imageUrl);
   };
+
+  const responseError = (response) => {
+    console.log(response);
+  }
 
   useEffect(() => {
     gapi.load("client:auth2", () => {
       gapi.auth2.init({clientId: config.GOOGLE_API_TOKEN})
     });
-  }, [])
+  }, []);
   
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -54,7 +56,7 @@ const Login = () => {
                 </button>
               )}
               onSuccess={responseGoogle}
-              onFailure={responseGoogle}
+              onFailure={responseError}
               cookiePolicy={"single_host_origin"}
             />
           </div>
